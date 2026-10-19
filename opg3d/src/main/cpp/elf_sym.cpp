@@ -1,5 +1,4 @@
 #include "elf_sym.h"
-#include "log.h"
 
 #include <cstring>
 
@@ -26,9 +25,6 @@ bool name_matches(const char* path, const char* soname) {
 
 int iterate_cb(struct dl_phdr_info* info, size_t, void* data) {
     Found* found = static_cast<Found*>(data);
-    LOGI("ELF scan: name='%s', base=%p",
-     info->dlpi_name ? info->dlpi_name : "(null)",
-     reinterpret_cast<void*>(info->dlpi_addr));
     if (!name_matches(info->dlpi_name, found->soname)) return 0;
     found->base = static_cast<uintptr_t>(info->dlpi_addr);
     found->phdr = info->dlpi_phdr;
