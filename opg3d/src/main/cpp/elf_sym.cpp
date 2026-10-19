@@ -1,4 +1,5 @@
 #include "elf_sym.h"
+#include "log.h"
 
 #include <cstring>
 
