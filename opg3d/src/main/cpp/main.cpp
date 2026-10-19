@@ -15,7 +15,7 @@
 namespace {
 
 constexpr const char* kIl2Cpp = "libil2cpp.so";
-constexpr int kWaitSteps = 6000;
+constexpr int kWaitSteps = 1000;
 constexpr useconds_t kWaitStepUs = 10 * 1000;
 
 // il2cpp_domain_get() starts returning a domain long before il2cpp_init
@@ -47,7 +47,9 @@ void* init_thread(void*) {
         if (!found) usleep(kWaitStepUs);
     }
     if (!found) {
-        LOGE("init: %s not found in process after 60 seconds", kIl2Cpp);
+        LOGE("init: %s not found in process after 60 seconds; "
+             "find_library() never matched an ELF entry",
+             kIl2Cpp);
         return nullptr;
     }
     LOGI("init: [1/6] %s found, base=0x%" PRIxPTR, kIl2Cpp, base);
